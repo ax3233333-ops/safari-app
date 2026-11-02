@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#126b67">
+<title>سفري SAFARI</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f5f3eb;color:#183536;font-family:Tahoma,Arial,sans-serif}
+header{background:linear-gradient(135deg,#105e63,#168b83);color:white;padding:24px 18px 30px;border-radius:0 0 28px 28px}
+.brand{display:flex;align-items:center;gap:12px}.logo{width:54px;height:54px;border-radius:16px;background:#fff;color:#126b67;display:grid;place-items:center;font-size:30px}
+h1{margin:0;font-size:25px}header p{margin:7px 0 0;color:#d9f3ee}
+main{padding:16px;max-width:620px;margin:auto}.panel{background:white;padding:17px;border-radius:20px;box-shadow:0 5px 20px #18353612;margin-top:-15px}
+h2{font-size:18px;margin:0 0 14px}.field{margin:12px 0}label{display:block;font-size:13px;margin-bottom:6px;color:#58706e}
+select,input{width:100%;padding:13px;border:1px solid #dce6e1;border-radius:12px;background:#fff;font-size:15px;color:#183536}
+button{border:0;border-radius:13px;padding:14px;background:#126b67;color:white;font-weight:bold;font-size:15px;width:100%;margin-top:8px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}.tile{background:#e7f2ed;padding:15px;border-radius:15px;text-align:center;font-weight:bold}.tile span{display:block;font-size:25px;margin-bottom:7px}
+.section{margin-top:23px}.muted{color:#71827e;font-size:13px;line-height:1.7}.route{padding:13px;border:1px solid #e2eae6;border-radius:14px;margin:9px 0;display:flex;justify-content:space-between;gap:8px}
+a{color:#126b67;text-decoration:none;font-weight:bold}.notice{background:#fff5df;border-radius:12px;padding:12px;font-size:12px;line-height:1.7;margin-top:14px}
+footer{text-align:center;padding:25px;color:#71827e;font-size:12px}
+</style></head>
+<body>
+<header><div class="brand"><div class="logo">🚌</div><div><h1>سفري SAFARI</h1><p>رحلتك تبدأ من هنا — كل السودان</p></div></div></header>
+<main>
+<div class="panel">
+<h2>احجز رحلتك</h2>
+<div class="field"><label>مدينة الانطلاق</label><select id="from"></select></div>
+<div class="field"><label>مدينة الوصول</label><select id="to"></select></div>
+<div class="field"><label>نوع الرحلة</label><select id="kind"><option>سفرية عامة</option><option>سفرية خاصة</option></select></div>
+<div class="field"><label>تاريخ السفر</label><input id="date" type="date"></div>
+<div class="field"><label>عدد المسافرين</label><select id="count"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></div>
+<button onclick="searchTrip()">ابحث عن رحلة</button>
+<div id="result" class="muted" aria-live="polite"></div>
+<div class="notice">هذه نسخة تجريبية للتصميم. لا توجد رحلات أو أسعار فعلية متصلة بعد. ستظهر الرحلات عند ربط شركات النقل وقاعدة البيانات.</div>
+</div>
+<div class="section"><h2>خدمات سفري</h2><div class="grid">
+<div class="tile"><span>🚌</span>السفريات العامة</div><div class="tile"><span>🚙</span>السفريات الخاصة</div>
+<div class="tile"><span>🎟️</span>حجوزاتي</div><div class="tile"><span>💬</span>الاستشارات</div>
+</div></div>
+<div class="section"><h2>وجهات سودانية</h2><p class="muted">الخرطوم • أم درمان • بحري • القضارف • عطبرة • شندي • الدامر • أبو حمد • بورتسودان • كسلا • مدني • سنار • كوستي • الأبيض • دنقلا • كريمة • الفاشر • نيالا ومدن أخرى.</p></div>
+<div class="section"><h2>تواصل معنا</h2><p class="muted">خدمة العملاء</p><a href="tel:0925610408">0925610408 — اتصال</a><br><br><a href="https://wa.me/249925610408">التواصل عبر واتساب (إذا كان الرقم مسجلاً عليه)</a></div>
+</main><footer>سفري SAFARI © — نموذج أولي قابل للتطوير</footer>
+<script>
+const cities=["أم درمان","الخرطوم","الخرطوم بحري","القضارف","عطبرة","شندي","الدامر","أبو حمد","بورتسودان","كسلا","مدني","سنار","كوستي","الأبيض","دنقلا","كريمة","الفاشر","نيالا","ربك","الدمازين","الجنينة","زالنجي","كلوقي","مروي","حلفا"];
+for(const id of ["from","to"]){const el=document.getElementById(id);cities.forEach(c=>{let o=document.createElement("option");o.textContent=c;o.value=c;el.appendChild(o)})}
+document.getElementById("from").value="أم درمان";document.getElementById("to").value="القضارف";
+document.getElementById("date").min=new Date().toISOString().slice(0,10);
+function searchTrip(){const f=document.getElementById("from").value,t=document.getElementById("to").value,d=document.getElementById("date").value,k=document.getElementById("kind").value,n=document.getElementById("count").value;const r=document.getElementById("result");if(f===t){r.textContent="اختر مدينتين مختلفتين.";return}if(!d){r.textContent="يرجى اختيار تاريخ السفر.";return}r.textContent=`طلبك: ${f} ← ${t} | ${d} | ${k} | ${n} مسافر. هذه نسخة تجريبية؛ يلزم ربط شركات النقل لعرض الرحلات المتاحة.`}
+</script></body></html>
